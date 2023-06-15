@@ -226,10 +226,50 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+function greatestProduct(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  let maxProduct = 0;
 
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      // Check horizontally (left to right)
+      if (col <= cols - 4) {
+        const product = matrix[row][col] * matrix[row][col + 1] * matrix[row][col + 2] * matrix[row][col + 3];
+        if (product > maxProduct) {
+          maxProduct = product;
+        }
+      }
 
+      // Check vertically (top to bottom)
+      if (row <= rows - 4) {
+        const product = matrix[row][col] * matrix[row + 1][col] * matrix[row + 2][col] * matrix[row + 3][col];
+        if (product > maxProduct) {
+          maxProduct = product;
+        }
+      }
 
+      // Check diagonally (top-left to bottom-right)
+      if (row <= rows - 4 && col <= cols - 4) {
+        const product = matrix[row][col] * matrix[row + 1][col + 1] * matrix[row + 2][col + 2] * matrix[row + 3][col + 3];
+        if (product > maxProduct) {
+          maxProduct = product;
+        }
+      }
+
+      // Check diagonally (top-right to bottom-left)
+      if (row <= rows - 4 && col >= 4) {
+        const product = matrix[row][col] * matrix[row + 1][col - 1] * matrix[row + 2][col - 2] * matrix[row + 3][col - 3];
+        if (product > maxProduct) {
+          maxProduct = product;
+        }
+      }
+    }
+  }
+
+  return maxProduct;
+
+}
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
